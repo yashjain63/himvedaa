@@ -19,26 +19,93 @@ import about3 from "../../assets/images/about3.png";
 // import logo from "../../assets/final logo.png";
 
 import pest from "../../assets/images/pest.png";
-import testiUse from "../../assets/images/testi-use.png";
-import testimonials from "../../assets/images/testimonials.png";
+import testimonialsImage from "../../assets/images/testimonials.png";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { FaFileArrowUp } from "react-icons/fa6";
 // import Footer from "../Sections/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+const testimonials = [
+  {
+    name: "Ananya Sharma",
+    role: "Customer",
+    text: "Himvedaa’s products have transformed my lifestyle. I feel more balanced and energized every day.",
+    img: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+  {
+    name: "Rahul Verma",
+    role: "Yoga Instructor",
+    text: "I recommend Himvedaa to my students. Their Ayurvedic approach is authentic and effective.",
+    img: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    name: "Priya Mehta",
+    role: "Nutritionist",
+    text: "I love how natural and pure the products are. Ayurveda has never been this easy to adopt.",
+    img: "https://randomuser.me/api/portraits/women/68.jpg",
+  },
+];
 
 const Home = () => {
   const FirstSectionCards = [1, 2, 3];
-  const [firstSectionCards, setFirstSectionCards] = useState();
+  // const [firstSectionCards, setFirstSectionCards] = useState();
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 30,
+    hours: 30,
+    minutes: 30,
+    seconds: 30,
+  });
+
+  // Countdown logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(prev => {
+        let { days, hours, minutes, seconds } = prev;
+
+        if (seconds > 0) seconds--;
+        else {
+          seconds = 59;
+          if (minutes > 0) minutes--;
+          else {
+            minutes = 59;
+            if (hours > 0) hours--;
+            else {
+              hours = 23;
+              if (days > 0) days--;
+            }
+          }
+        }
+
+        return { days, hours, minutes, seconds };
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
+  // for testimonials
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // changes every 5s
+    return () => clearInterval(timer);
+  }, []);
+
+
   return (
     <>
-      {/* <Header /> */}
 
       {/* first Section */}
       <div
-        className="h-[80vh] md:h-[90vh] bg-cover bg-center text-white flex justify-center items-center"
+        className="h-[80vh] md:h-[105vh] bg-cover bg-center text-white flex justify-center items-center"
         style={{ backgroundImage: `url(${banner1})` }}
       >
         <div className="flex flex-col justify-center items-center gap-6 border border-white/30 px-6 md:px-[160px] py-[60px] backdrop-blur-xs bg-white/10 rounded-bl-[120px] rounded-tr-[120px] text-center">
@@ -48,7 +115,7 @@ const Home = () => {
             Organic & Natural
           </h1>
 
-          {/* Subheading */}
+          {/* SubHeading */}
           <p className="text-base md:text-lg font-semibold">
             Environment friendly & sustainable
           </p>
@@ -58,7 +125,7 @@ const Home = () => {
             <button className="bg-green-600 text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
               <span className="inline-block skew-x-[12deg]">View all</span>
             </button>
-            <button className="bg-[#6B2D25] text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
+            <button className="bg-[ ] text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
               <span className="inline-block skew-x-[12deg]">Shop Now</span>
             </button>
           </div>
@@ -66,16 +133,16 @@ const Home = () => {
       </div>
 
       {/* Second div new launch  */}
-      <div class="flex flex-wrap justify-center items-center gap-6 p-[30px] bg-white">
+      <div className="flex flex-wrap justify-center items-center gap-6 p-[30px] bg-white">
         {/* <!-- Left Section --> */}
-        <div class="w-full md:w-[200px] text-center flex flex-col justify-center items-center">
-          <h2 class="text-lg font-bold text-red-900">New Launch</h2>
-          <p class="text-sm mt-2 mb-4 text-gray-700">
+        <div className="w-full md:w-[200px] text-center flex flex-col justify-center items-center">
+          <h2 className="text-lg font-bold text-red-900">New Launch</h2>
+          <p className="text-sm mt-2 mb-4 text-gray-700">
             Explore our latest launch, a carefully made collection of herbal
             treasures designed as per requests made by you to Nanaji.
           </p>
-          <button class="bg-green-700 cursor-pointer text-white px-6 py-[6px] rounded hover:bg-green-800 text-sm">
-            View all
+          <button className="bg-green-600 cursor-pointer text-white font-normal px-6 py-[6px] skew-x-[-12deg] hover:opacity-90 text-[15px]">
+            <span className="inline-block skew-x-[12deg]">View all</span>
           </button>
         </div>
 
@@ -125,14 +192,12 @@ const Home = () => {
       </div>
 
       {/* second Section Deal of the END */}
-      <div className="flex flex-col lg:flex-row justify-center items-center w-full  p-6 sm:p-10 md:p-20  bg-blue-200">
+      <div className="flex flex-col lg:flex-row justify-center items-center w-full p-6 sm:p-10 md:p-20 bg-blue-200">
         {/* Left section */}
         <div className="w-full lg:w-[40%] flex justify-center items-center mb-8 lg:mb-0 ">
-          <img
-            className="w-full h-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
+          <img className="w-full h-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
             src={praice}
-            alt="image"
-          />
+            alt="image" />
         </div>
 
         {/* Right section */}
@@ -151,7 +216,7 @@ const Home = () => {
 
             {/* Price */}
             <div className="flex justify-center items-center gap-4">
-              <span className="text-2xl sm:text-3xl font-semibold text-green-600">
+              <span className="text-5xl sm:text-5xl font-semibold text-green-600">
                 $95.99
               </span>
               <span className="line-through text-gray-500 text-lg">$99.99</span>
@@ -166,31 +231,29 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Countdown */}
+            {/* Timer */}
             <div className="flex gap-1 flex-wrap justify-center items-center">
-              {["Days", "Hours", "Minutes", "Seconds"].map((label, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-400 flex flex-col items-center px-8 py-5 shadow-xl hover:shadow-2xl rounded-md"
-                >
-                  <span className="font-bold text-xl sm:text-2xl text-gray-800">
-                    30
-                  </span>
-                  <p className="text-sm text-gray-600">{label}</p>
-                </div>
-              ))}
+              {['Days', 'Hours', 'Minutes', 'Seconds'].map((label, idx) => {
+                const value = Object.values(timeLeft)[idx];
+                return (
+                  <div key={label} className="border border-gray-400 flex flex-col items-center px-8 py-5 shadow-xl hover:shadow-2xl rounded-md">
+                    <p className="font-bold text-xl sm:text-2xl text-gray-800">{String(value).padStart(2, '0')}</p>
+                    <p className="text-sm text-gray-600">{label}</p>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Button */}
-            <button className="px-6 py-2 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 hover:scale-105 transition">
-              Shop Now
+            <button className="px-6 py-2 mt-3 bg-green-600 text-white skew-x-[-12deg] font-semibold hover:bg-green-700 hover:scale-105 transition">
+              <Link to="/cart"> <span className="inline-block skew-x-[12deg]">Shop Now</span></Link>
             </button>
           </div>
         </div>
       </div>
 
       {/* third section */}
-      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-10 py-10 ">
+      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-10 py-14 ">
         <h2 className="text-center font-bold mb-10 text-3xl text-[#7b342d]">
           Our Product
         </h2>
@@ -235,7 +298,7 @@ const Home = () => {
       </div>
 
       {/* fifth section Two images  */}
-      <div className="flex flex-col lg:flex-row justify-center bg-center bg-cover items-center px-4 sm:px-10 lg:px-[100px] py-10 gap-6 w-full">
+      <div className="flex flex-col lg:flex-row justify-center bg-center bg-cover items-center px-4 sm:px-10 lg:px-[100px] py-3 pb-6 gap-6 w-full">
         <div className="relative w-full">
           <img
             src={imgProdct1}
@@ -251,7 +314,7 @@ const Home = () => {
               className="text-red-950 text-2xl"
               style={{ fontFamily: "Open Sans" }}
             >
-              winter Vacation
+              Winter Products 
             </span>
           </h1>
           <br />
@@ -264,15 +327,15 @@ const Home = () => {
             className="w-full h-auto object-cover"
           />
           <h1 className="absolute top-4 left-4 text-5xl font-bold z-10 text-green-600">
-            -25% Sale <br />
-            <span className="text-red-950 text-2xl">Summer Vacation </span>
+            25% Sale <br />
+            <span className="text-red-950 text-2xl">Summer Products </span>
           </h1>
           <br />
         </div>
       </div>
 
       {/* Best seller */}
-      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-10 py-10 ">
+      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-10  ">
         <h2 className="text-center font-bold mb-10 text-3xl text-[#7b342d]">
           Best Seller
         </h2>
@@ -319,7 +382,7 @@ const Home = () => {
 
       {/* sixth section High-Quality Teas & Botanicals */}
       <div
-        className="w-full h-full py-20 sm:py-28 md:py-36 bg-no-repeat bg-cover bg-center"
+        className="w-full h-full py-20 sm:py-28 md:py-36 mt-16 bg-no-repeat bg-cover bg-center"
         style={{ backgroundImage: `url(${h5_bg2})` }}
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between md:px-10  gap-8">
@@ -332,23 +395,22 @@ const Home = () => {
           <div className="w-full text-center md:w-1/2 md:text-left md:ml-20 lg:pl-14 ">
             <h2
               className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#4a2511] mb-4"
-              style={{ fontFamily: "Open Sans" }}
-            >
+              style={{ fontFamily: "Open Sans" }}>
               High-Quality Teas & Botanicals
             </h2>
             <p className="text-sm sm:text-base text-[#5c5c5c] mb-6 px-2 md:px-0">
               Save 25% sitewide on beautifully packaged gift sets, tea
               collections, and exquisite accessories Moms adore.
             </p>
-            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition-all duration-300">
-              View all
+            <button className="bg-green-600 hover:bg-green-700 skew-x-[-12deg] text-white px-6 py-2 transition-all duration-300">
+              <span className="inline-block skew-x-[12deg]">View all</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* seventh section Latest News & Recipes */}
-      <div className="py-16 px-4 md:px-8 bg-white text-center">
+      <div className="py-16 pt-10 px-4 md:px-8 bg-white text-center">
         <h2
           className="text-2xl md:text-3xl font-bold text-[#7b342d] mb-10"
           style={{ fontFamily: "Open Sans" }}
@@ -365,7 +427,7 @@ const Home = () => {
                 Chamomile: Herbal Tea of the Month
               </h3>
               <a href="#" className="text-green-600 text-sm hover:underline">
-                read more &gt;
+                Read More &gt;
               </a>
             </div>
           </div>
@@ -378,7 +440,7 @@ const Home = () => {
                 Chamomile: Herbal Tea of the Month
               </h3>
               <a href="#" className="text-green-600 text-sm hover:underline">
-                read more &gt;
+                Read More &gt;
               </a>
             </div>
           </div>
@@ -391,7 +453,7 @@ const Home = () => {
                 Chamomile: Herbal Tea of the Month
               </h3>
               <a href="#" className="text-green-600 text-sm hover:underline">
-                read more &gt;
+                Read More &gt;
               </a>
             </div>
           </div>
@@ -404,7 +466,7 @@ const Home = () => {
                 Chamomile: Herbal Tea of the Month
               </h3>
               <a href="#" className="text-green-600 text-sm hover:underline">
-                read more &gt;
+                Read More &gt;
               </a>
             </div>
           </div>
@@ -412,7 +474,7 @@ const Home = () => {
       </div>
 
       {/* eighth section The Ultimate Tea Experience */}
-      <div className="flex flex-col md:flex-row justify-center items-center w-full pb-[60px] px-4 md:px-0">
+      <div className="flex flex-col md:flex-row justify-center items-center w-full py-[60px] px-4 md:px-0 bg-amber-100">
         {/* Left Image Column - Hidden on small screens */}
         <div className="hidden md:flex flex-col w-[30%] justify-center items-center">
           <img src={about1} alt="" />
@@ -422,7 +484,7 @@ const Home = () => {
         {/* Center Content */}
         <div className="flex flex-col w-full md:w-[40%] justify-center items-center gap-6">
           <h1
-            className="font-bold text-3xl md:text-4xl text-[#7b342d] text-center "
+            className="font-bold  text-3xl md:text-4xl text-[#7b342d] text-center "
             style={{ fontFamily: "Open Sans" }}
           >
             The Ultimate Tea Experience
@@ -438,8 +500,8 @@ const Home = () => {
             nihil? Facilis, obcaecati.
           </p>
 
-          <button className="pl-4 pr-4 pt-2 pb-2 rounded-sm bg-green-500 text-white hover:bg-green-700">
-            Learn More
+          <button className="pl-4 pr-4 pt-2 pb-2 skew-x-[-12deg] bg-green-600 text-white hover:bg-green-700">
+            <span className="inline-block skew-x-[12deg]">Learn More</span>
           </button>
         </div>
 
@@ -452,7 +514,7 @@ const Home = () => {
 
       {/* ninth section Want To Stay Healthy Drint Matcha Best Flavour Of Out Tea */}
       <div
-        className="flex flex-col md:flex-row py-[60px] px-4 md:px-[100px] w-full items-center justify-center gap-10"
+        className="flex flex-col md:flex-row py-[50px] px-4 md:px-[100px] w-full items-center justify-center gap-10"
         style={{ backgroundImage: `url(${ft1_bg_1})` }}
       >
         {/* Left section */}
@@ -468,8 +530,8 @@ const Home = () => {
             deleniti similique facilis officiis quaerat modi quibusdam,
             consequuntur doloribus voluptatum.
           </p>
-          <button className="pl-4 pr-4 pt-2 pb-2 rounded-sm bg-green-500 text-white hover:bg-green-700 w-fit mx-auto md:mx-0">
-            Learn More
+          <button className="pl-4 pr-4 pt-2 pb-2 skew-x-[-12deg] bg-green-600 text-white hover:bg-green-700 w-fit mx-auto md:mx-0">
+            <span className="inline-block skew-x-[12deg]">Learn More</span>
           </button>
         </div>
 
@@ -489,14 +551,10 @@ const Home = () => {
       </div>
 
       {/* tenth section Tea Is One Of the Most Popular Drinks In the World*/}
-      <div className="flex flex-col md:flex-row py-[60px] px-4 md:px-[100px] w-full items-center justify-center gap-10">
+      <div className="flex flex-col md:flex-row py-[50px] px-4 md:px-[100px] w-full items-center justify-center gap-10">
         {/* Left section - Image */}
         <div className="flex justify-center items-center w-full md:w-1/2">
-          <img
-            src={pest}
-            alt="Tea Illustration"
-            className="w-full max-w-md object-contain"
-          />
+          <img src={pest} alt="Tea Illustration" className="w-full max-w-md object-contain" />
         </div>
 
         {/* Right section - Text */}
@@ -512,50 +570,73 @@ const Home = () => {
             deleniti similique facilis officiis quaerat modi quibusdam,
             consequuntur doloribus voluptatum.
           </p>
+          <button className="pl-4 pr-4 pt-2 pb-2 skew-x-[-12deg] bg-green-600 text-white hover:bg-green-700 w-fit mx-auto md:mx-0">
+            <span className="inline-block skew-x-[12deg]"><Link to="/cart" >Shop Now</Link></span>
+          </button>
         </div>
       </div>
 
       {/* eleventh section Testimonials */}
-      <div
-        className=" flex justify-center items-center flex-col w-full gap-5 text-white font-semibold py-[60px] "
-        style={{
-          backgroundImage: `url(${testimonials})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      >
-        <h1 className="text-2xl text-green-600">Testimonials</h1>
+      <section className=" py-20 px-6 md:px-16 lg:px-32" style={{ backgroundImage: `url(${testimonialsImage})`, backgroundPosition: "center", backgroundSize: "cover" }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-center font-bold mb-2 text-3xl md:text-4xl text-green-600">Testimonials </h2>
+          <p className="text-green-50 mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ea  <br />Lorem ipsum dolor sit amet consectetur </p>
 
-        <img
-          src={testiUse}
-          alt="userImage"
-          className="rounded-full border-5 border-green-700"
-        />
-        <p>Patricia James TOp Manager</p>
-        <p className="w-[60%] text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur ipsa
-          architecto qui earum eveniet aperiam, quas quisquam, quia hic a
-          nesciunt impedit voluptas debitis eligendi! Debitis repellendus
-          delectus amet ut. Nihil harum exercitationem totam amet velit, officia
-          explicabo.
-        </p>
+          {/* Slider Container */}
+          <div className="relative overflow-hidden">
+            <div
+              className="flex transition-transform ease-in-out duration-700"
+              style={{ transform: `translateX(-${current * 100}%)` }}
+            >
+              {testimonials.map((t, index) => (
+                <div
+                  key={index}
+                  className="w-full flex-shrink-0 px-6 md:px-12"
+                >
+                  <div className="bg-transparent rounded-xl shadow-lg p-8 md:p-12 max-w-3xl mx-auto">
+                    <img
+                      src={t.img}
+                      alt={t.name}
+                      className="w-36 h-36 mx-auto rounded-full object-cover mb-4 border-4 border-green-200"
+                    />
+                    <p className="text-lg italic text-white ">
+                      "{t.text}"
+                    </p>
+                    <h1 className="text-2xl font-bold mb-6">⭐⭐⭐⭐⭐</h1>
+                    <h4 className="text-xl font-semibold text-white">
+                      {t.name}
+                    </h4>
+                    <p className="text-white">{t.role}</p>
+                  </div>
+                </div>
+              ))}
 
-        <h1 className="text-2xl font-bold">⭐⭐⭐⭐⭐</h1>
+            </div>
 
-        <h1 className="text-2xl font-bold">📀📀📀</h1>
-      </div>
+            {/* Dots Navigation */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-3 h-3 rounded-full ${current === index ? "bg-green-600" : "bg-gray-300"
+                    }`}
+                  onClick={() => setCurrent(index)}
+                ></button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* twelfth section icons*/}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 p-6 pt-[60px] pb-[60px]">
         {/* Card 1 */}
-        <div
-          className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
+        <div className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
       shadow-sm hover:shadow-green-400 border border-transparent 
       hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl p-20 transition duration-300 transform "
-        >
+      rounded-2xl transition duration-300 transform ">
           <FaShoppingCart className="text-4xl text-green-700" />
-          <p className="text-lg font-semibold text-gray-700">Free Shipping</p>
+          <p className="text-lg font-semibold text-gray-700 text-center">Free Shipping</p>
         </div>
 
         {/* Card 2 */}
@@ -563,10 +644,10 @@ const Home = () => {
           className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
       shadow-sm hover:shadow-green-400 border border-transparent 
       hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl p-20 transition duration-300 transform "
+      rounded-2xl transition duration-300 transform "
         >
           <FaFileArrowUp className="text-4xl text-blue-700" />
-          <p>Hand Packed</p>
+          <p className="text-lg text-center font-semibold text-gray-700" >Hand Packed</p>
         </div>
 
         {/* Card 3 */}
@@ -574,22 +655,11 @@ const Home = () => {
           className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
       shadow-sm hover:shadow-green-400 border border-transparent 
       hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl pt-20 pb-20 pl-12 pr-16 transition duration-300 transform "
-        >
-          <MdSecurity className="text-4xl text-red-600" />
-          <p className="text-lg font-semibold text-gray-700">Secured Payment</p>
-        </div>
-
-        {/*  */}
-        {/* <div
-          className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
-      shadow-xl hover:shadow-green-500 border border-transparent 
-      hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
       rounded-2xl  transition duration-300 transform "
         >
           <MdSecurity className="text-4xl text-red-600" />
-          <p>Secured Payment</p>
-        </div> */}
+          <p className="text-lg font-semibold text-gray-700 text-center">Secured Payment</p>
+        </div>
 
         {/* Card 4 */}
 
@@ -597,90 +667,33 @@ const Home = () => {
           className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
       shadow-sm hover:shadow-green-400 border border-transparent 
       hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl pt-20 pb-20 pl-12 pr-12 transition duration-300 transform "
+      rounded-2xl transition duration-300 transform "
         >
           <FaCheckCircle className="text-4xl text-green-400" />
 
-          <p className="text-lg font-semibold text-gray-700">
-            Quality Guarantee
-          </p>
+          <p className="text-lg font-semibold text-gray-700 text-center"> Quality Guarantee </p>
         </div>
 
-        {/*  */}
-        {/* <div
-          className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
-      shadow-xl hover:shadow-green-500 border border-transparent 
-      hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl  transition duration-300 transform "
-        >
-          <FaCheckCircle className="text-4xl text-green-400" />
-          <p>Quality Guarantee</p>
-        </div> */}
-
         {/* Card 5 */}
-
         <div
           className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
       shadow-sm hover:shadow-green-400 border border-transparent 
       hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl pt-20 pb-20 pl-12 pr-12 transition duration-300 transform "
+      rounded-2xl pt-20 pb-20 transition duration-300 transform "
         >
           <RiCustomerServiceFill className="text-4xl text-blue-700" />
 
-          <p className="text-lg font-semibold text-gray-700">
-            Customer Services
-          </p>
+          <p className="text-lg font-semibold text-gray-700 text-center"> Customer Services </p>
         </div>
 
-        {/*  */}
-        {/* <div
-          className="cursor-pointer flex flex-col justify-center items-center gap-2 box-border 
-      shadow-xl hover:shadow-green-500 border border-transparent 
-      hover:border-gray-500 bg-gradient-to-br from-white to-green-100 
-      rounded-2xl transition duration-300 transform "
-        >
-          <RiCustomerServiceFill className="text-4xl text-blue-700" />
-          <p>Customer Services</p>
-        </div> */}
       </div>
 
-      -
-
-      {/* end Map section */}
-
-      {/* 13th section Join The Tea Club */}
-      {/* <div className="flex flex-col lg:flex-row justify-evenly items-center gap-6 py-[80px] px-4 border"> */}
-      {/* Left Section */}
-      {/* <div className="flex flex-col justify-center items-center text-center lg:text-left">
-          <h2 className="text-2xl text-red-700 font-bold">Join The Tea Club</h2>
-          <p className="font-semibold text-gray-600 max-w-md">
-            You will receive a FREE STAMP and 10% discount for your next
-            purchase
-          </p>
-        </div> */}
-
-      {/* Right Section */}
-      {/* <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
-          <input
-            type="text"
-            placeholder="Your email address"
-            className="p-2 border border-gray-400 w-full sm:w-auto"
-          />
-          <button className="p-2 bg-green-600 text-white hover:bg-green-800 border-gray-400 border">
-            Subscribe
-          </button>
-        </div> */}
-      {/* </div> */}
-
       <div
-        className="relative flex justify-center items-center h-[400px] text-center font-bold text-xl text-white border-none"
+        className="relative flex justify-center items-center h-[284px] text-center font-bold text-xl text-white border-none"
         style={{ fontFamily: "Open Sans" }}
       >
         {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${FooterIMG})` }}
-        ></div>
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${FooterIMG})` }} ></div>
 
         {/* Black gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>

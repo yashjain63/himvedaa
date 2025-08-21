@@ -1,124 +1,108 @@
-import React, { useState, useEffect} from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import React from "react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import ContactUnder from "/imags/contactUnder.png"
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [status, setStatus] = useState("");
-
-  // Scroll To top   
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-  
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus("Please fill out all fields.");
-      return;
-    }
-
-    // You can replace this with your API call
-    console.log("Form Submitted:", formData);
-    setStatus("Message sent successfully!");
-    setFormData({ name: "", email: "", message: "" });
-  };
-
+export default function ContactPage() {
   return (
-    <div id="cntact" className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-        {/* Contact Info */}
-        <div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Contact Us</h1>
-          <p className="text-gray-600 mb-8">
-            Have questions? We’re here to help. Reach out via the form or contact
-            us directly.
+    <div className="w-full">
+      <div style={{backgroundImage: "linear-gradient(rgb(0 0 0 / 66%)), url('/imags/bgTest.jpg')"}}
+        className="relative h-90 bg-cover bg-center flex items-center justify-center "
+      >
+        <div className="text-center text-white">
+          <h1 className="text-5xl font-bold">Contact</h1>
+          <p className="text-sm mt-2">
+            Home <span className="text-green-400">/</span> Contact
           </p>
+        </div>
+      </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <Mail className="text-green-600" />
-              <span className="text-gray-700">info@yourwebsite.com</span>
+      {/* Contact Section */}
+      <div className="py-12 bg-gray-100">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-green-800">Himvedaa</h2>
+            <p className="text-gray-600">Get in Touch</p>
+              <img className="mx-auto h-10 mt-3" src={ContactUnder}/>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 bg-white rounded-2xl shadow-md p-6">
+            {/* Contact Form */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Leave A Message Here</h3>
+              <p className="text-sm text-gray-500 mb-6">
+                Feel free to drop us a line below
+              </p>
+              <form className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+                />
+                <textarea
+                  placeholder="Message"
+                  rows="4"
+                  className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+                ></textarea>
+                <button className="bg-green-700 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 transition">
+                  Send
+                </button>
+              </form>
             </div>
-            <div className="flex items-center space-x-4">
-              <Phone className="text-green-600" />
-              <span className="text-gray-700">+1 (555) 123-4567</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <MapPin className="text-green-600" />
-              <span className="text-gray-700">
-                1234 Main Street, City, Country
-              </span>
+
+            {/* Contact Info */}
+            <div className="bg-green-800 text-white rounded-xl p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center mb-4">
+                  <MapPin className="mr-3" />
+                  <p>150 King Street <br /> Khartoum - Sudan</p>
+                </div>
+                <div className="flex items-center mb-4">
+                  <Mail className="mr-3" />
+                  <p>
+                    company@name.com <br /> name@company.com
+                  </p>
+                </div>
+                <div className="flex items-center mb-4">
+                  <Phone className="mr-3" />
+                  <p>+971 256343256 <br /> +971 256343256</p>
+                </div>
+              </div>
+
+              {/* Socials */}
+              <div className="flex space-x-4 mt-6">
+                <a href="#" className="hover:text-gray-300">
+                  <Facebook />
+                </a>
+                <a href="#" className="hover:text-gray-300">
+                  <Twitter />
+                </a>
+                <a href="#" className="hover:text-gray-300">
+                  <Instagram />
+                </a>
+                <a href="#" className="hover:text-gray-300">
+                  <Linkedin />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Contact Form */}
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="5"
-              className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-xl font-semibold hover:bg-green-700 transition"
-            >
-              Send Message
-            </button>
-          </form>
-
-          {status && (
-            <p className="mt-4 text-center text-sm text-gray-600">{status}</p>
-          )}
-        </div>
       </div>
-      <div className="w-full mt-10 px-4 md:px-10 lg:px-20 py-10 bg-[#E6E4E1]">
-        <div className="w-full h-64 sm:h-80 md:h-[400px] lg:h-[500px]">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13518.853007815713!2d76.2629000320481!3d32.104034709840576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391b4f902117bb1f%3A0xf28a1e3b1ff9e8f9!2sKangra%20Bus%20Stand!5e0!3m2!1sen!2sin!4v1727256970607!5m2!1sen!2sin"
-            className="w-full h-full rounded shadow-lg"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Google Maps"
-          ></iframe>
-        </div>
+
+      {/* Map Section */}
+      <div className="w-full h-80">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2443.1877391677937!2d-1.256019684237663!3d51.754816979676655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876c1629e8c8e0f%3A0xdeb7e9b0e4e1b4f9!2sUniversity%20of%20Oxford!5e0!3m2!1sen!2suk!4v1684500000000!5m2!1sen!2suk"
+          className="w-full h-full border-0"
+          allowFullScreen=""
+          loading="lazy"
+          title="Google Map"
+        ></iframe>
       </div>
     </div>
-    
   );
-};
-
-export default Contact;
+}

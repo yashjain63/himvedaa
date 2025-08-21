@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
+import CartBackground from "/imags/cartBaground.jpg"; 
 
-const Cart = () => {
+const CartPage = () => {
   const [cart, setCart] = useState([
     {
       id: 1,
@@ -57,11 +58,30 @@ const Cart = () => {
   const total = subtotal + tax;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 ">
+      
+      {/* Hero Section */}
+      <div
+            className="p-14 flex flex-col justify-center items-center my-10"
+            style={{
+              backgroundImage: `url(${CartBackground})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+               Your Cart
+            </h1>
+            <p className="text-lg text-gray-200">
+               Home/Cart
+            </p>
+          </div>
+
+
       <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="md:col-span-2 bg-white p-6 rounded-2xl shadow-lg">
-          <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
+          {/* <h1 className="text-2xl font-bold mb-6">Your Cart</h1> */}
 
           {cart.length === 0 ? (
             <p className="text-gray-500">Your cart is empty.</p>
@@ -143,4 +163,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;
