@@ -125,7 +125,7 @@ const Home = () => {
             <button className="bg-green-600 text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
               <span className="inline-block skew-x-[12deg]">View all</span>
             </button>
-            <button className="bg-[ ] text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
+            <button className="bg-[#702a21f4] text-white px-6 py-2 skew-x-[-12deg] hover:opacity-90">
               <span className="inline-block skew-x-[12deg]">Shop Now</span>
             </button>
           </div>
