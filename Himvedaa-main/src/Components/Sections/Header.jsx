@@ -112,7 +112,7 @@ const Header = () => {
               <a href="/" className="hover:text-green-600">Home</a>
               <a href="/about" className="hover:text-green-600">About</a>
               <a href="/shop" className="hover:text-green-600">Shop</a>
-              <a href="/blogs" className="hover:text-green-600">Blogs</a>
+              <a href="/blogs" className="hover:text-green-600">Blog</a>
               <a href="/contact" className="hover:text-green-600">Contact</a>
               <form onSubmit={handleSearch} className="flex w-3/4">
                 <input
